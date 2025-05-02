@@ -1,0 +1,19 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+dist
+
+# PostgreSQL data
+pgdata
+data
+*.log
+*.sqlite
+*.db
+
+# Node-related
+node_modules
+dist
+coverage
+.env
+.vscode
