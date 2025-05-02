@@ -1,5 +1,7 @@
+import { ObjectType } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+@ObjectType()
 @Entity()
 export class Ruling {
   @PrimaryGeneratedColumn('uuid')
