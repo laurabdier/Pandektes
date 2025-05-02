@@ -4,7 +4,6 @@ import { RulingsResolver } from './ruling.resolver';
 import { RulingService } from './ruling.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// src/rulings/rulings.module.ts
 @Module({
   imports: [TypeOrmModule.forFeature([Ruling])],
   providers: [RulingService, RulingsResolver],

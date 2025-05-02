@@ -1,4 +1,3 @@
-// src/rulings/ruling.model.ts
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
@@ -8,4 +7,16 @@ export class Ruling {
 
   @Field()
   title: string;
+
+  @Field()
+  content: string;
+
+  @Field()
+  publicationDate: string;
+
+  @Field()
+  providerId: string;
+
+  @Field()
+  providerSource: string;
 }
