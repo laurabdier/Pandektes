@@ -7,6 +7,7 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
+import { RulingsModule } from './ruling.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AppResolver } from './app.resolver';
       autoLoadEntities: true,
     }),
     TypeOrmModule.forFeature([Ruling]),
+    RulingsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
