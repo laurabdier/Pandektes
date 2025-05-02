@@ -13,7 +13,7 @@ type ResponseMFKN = {
 
 @Injectable()
 export class AppService {
-  async getMFKNRulings(): Promise<string> {
+  async scrapMFKN(): Promise<string> {
     for (let skip = 0; ; skip += 1000) {
       const result = await fetch('https://mfkn.naevneneshus.dk/api/search', {
         method: 'POST',

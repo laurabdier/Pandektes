@@ -8,6 +8,6 @@ export class AppResolver {
 
   @Query(() => String)
   async startScraping() {
-    return await this.appService.getMFKNRulings();
+    return await this.appService.scrapMFKN();
   }
 }
