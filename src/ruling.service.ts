@@ -1,7 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ruling } from './ruling.entity';
-import { FindOptionsOrder, FindOptionsWhere, In, Repository } from 'typeorm';
+import {
+  Between,
+  FindOptionsOrder,
+  FindOptionsWhere,
+  In,
+  LessThanOrEqual,
+  Like,
+  MoreThanOrEqual,
+  Repository,
+} from 'typeorm';
 import { RulingsFilterInput } from './ruling.input';
 
 @Injectable()
@@ -12,25 +21,28 @@ export class RulingService {
   ) {}
 
   async getRulings(filter: RulingsFilterInput = {}): Promise<Ruling[]> {
-    const { ids, publicationDates, providerIds, providerSources, sorting, limit, offset } = filter;
+    const { ids, titleSearch, publishedFrom, publishedTo, sortDirection, sortKey, limit, offset } =
+      filter;
     const whereOptions: FindOptionsWhere<Ruling> = {};
     const orderOptions: FindOptionsOrder<Ruling> = {};
 
     if (ids && ids.length > 0) {
       whereOptions.id = In(ids);
     }
-    if (publicationDates && publicationDates.length > 0) {
-      whereOptions.publicationDate = In(publicationDates);
-    }
-    if (providerIds && providerIds.length > 0) {
-      whereOptions.publicationDate = In(providerIds);
-    }
-    if (providerSources && providerSources.length > 0) {
-      whereOptions.providerSource = In(providerSources);
+    if (publishedFrom && publishedTo) {
+      whereOptions.publishedAt = Between(publishedFrom, publishedTo);
+    } else if (publishedFrom) {
+      whereOptions.publishedAt = MoreThanOrEqual(publishedFrom);
+    } else if (publishedTo) {
+      whereOptions.publishedAt = LessThanOrEqual(publishedTo);
     }
 
-    if (sorting) {
-      orderOptions.title = sorting;
+    if (titleSearch) {
+      whereOptions.title = Like(`%${titleSearch}%`);
+    }
+
+    if (sortDirection && sortKey) {
+      orderOptions[sortKey] = sortDirection;
     }
 
     return await this.rulingRepository.find({
@@ -41,8 +53,8 @@ export class RulingService {
     });
   }
 
-  async getMFKNRulingById(id: string) {
-    return await this.rulingRepository.findBy({
+  async getRulingById(id: string) {
+    return await this.rulingRepository.findOneBy({
       id,
     });
   }

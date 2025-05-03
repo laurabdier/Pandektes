@@ -14,4 +14,12 @@ export class RulingsResolver {
   ): Promise<Ruling[]> {
     return await this.rulingService.getRulings(filter);
   }
+
+  @Query(() => Ruling, { nullable: true })
+  async ruling(
+    @Args('id', { type: () => String })
+    id: string,
+  ): Promise<Ruling | null> {
+    return await this.rulingService.getRulingById(id);
+  }
 }

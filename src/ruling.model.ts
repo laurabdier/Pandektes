@@ -12,7 +12,7 @@ export class Ruling {
   content: string;
 
   @Field()
-  publicationDate: string;
+  publishedAt: Date;
 
   @Field()
   providerId: string;

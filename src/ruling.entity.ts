@@ -1,8 +1,9 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 
 @ObjectType()
 @Entity()
+@Unique(['providerId', 'providerSource'])
 export class Ruling {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -13,8 +14,8 @@ export class Ruling {
   @Column()
   content: string;
 
-  @Column()
-  publicationDate: string;
+  @Column({ type: 'timestamptz' })
+  publishedAt: Date;
 
   @Column()
   providerId: string;

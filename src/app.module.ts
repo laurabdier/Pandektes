@@ -8,6 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
 import { RulingsModule } from './ruling.module';
+import { env } from 'process';
 
 @Module({
   imports: [
@@ -19,11 +20,11 @@ import { RulingsModule } from './ruling.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'db',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'postgres',
+      host: env.DB_HOST,
+      port: Number(env.DB_PORT),
+      username: env.DB_USERNAME,
+      password: env.DB_PASSWORD,
+      database: env.DB_NAME,
       entities: [],
       synchronize: true,
       autoLoadEntities: true,

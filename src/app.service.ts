@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Ruling } from './ruling.entity';
-import AppDataSource from './dataSource';
+import { DataSource } from 'typeorm';
 
 type ResponseMFKN = {
   id: string;
@@ -13,7 +13,8 @@ type ResponseMFKN = {
 
 @Injectable()
 export class AppService {
-  async scrapMFKN(): Promise<string> {
+  constructor(private dataSource: DataSource) {}
+  async scrapeMFKN(): Promise<string> {
     for (let skip = 0; ; skip += 1000) {
       const result = await fetch('https://mfkn.naevneneshus.dk/api/search', {
         method: 'POST',
@@ -32,7 +33,7 @@ export class AppService {
       if (!result.ok) {
         console.log('NOT OK', {
           status: result.status,
-          content: await result.text(),
+          statusText: result.statusText,
         });
         break;
       }
@@ -45,7 +46,7 @@ export class AppService {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       publications.forEach(async (publication) => {
         if (
-          !(await AppDataSource.manager.findOneBy(Ruling, {
+          !(await this.dataSource.manager.findOneBy(Ruling, {
             providerId: publication.id,
             providerSource: 'mfkn',
           }))
@@ -66,8 +67,8 @@ export class AppService {
     ruling.content = publication.body;
     ruling.providerId = publication.id;
     ruling.providerSource = 'mfkn';
-    ruling.publicationDate = publication.published_date;
+    ruling.publishedAt = new Date(publication.published_date);
 
-    await AppDataSource.manager.save(ruling);
+    await this.dataSource.manager.save(ruling);
   }
 }

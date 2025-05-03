@@ -1,4 +1,3 @@
-// src/app.resolver.ts
 import { Query, Resolver } from '@nestjs/graphql';
 import { AppService } from './app.service';
 
@@ -8,6 +7,6 @@ export class AppResolver {
 
   @Query(() => String)
   async startScraping() {
-    return await this.appService.scrapMFKN();
+    return await this.appService.scrapeMFKN();
   }
 }
