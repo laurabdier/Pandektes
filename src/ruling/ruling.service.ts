@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Ruling } from './ruling/ruling.entity';
+import { Ruling } from './ruling.entity';
 import {
   Between,
   FindOptionsOrder,
@@ -11,7 +11,7 @@ import {
   MoreThanOrEqual,
   Repository,
 } from 'typeorm';
-import { RulingsFilterInput } from './ruling/ruling.input';
+import { RulingsFilterInput } from './ruling.input';
 
 @Injectable()
 export class RulingService {

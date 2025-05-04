@@ -1,5 +1,6 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { RulingSortKey, SortDirection } from './types';
+import { SortDirection } from '../types';
+import { RulingSortKey } from './ruling.types';
 
 @InputType()
 export class RulingsFilterInput {

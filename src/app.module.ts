@@ -2,13 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Ruling } from './ruling.entity';
+import { Ruling } from './ruling/ruling.entity';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
-import { RulingsModule } from './ruling.module';
-import { env } from 'process';
+import { RulingsModule } from './ruling/ruling.module';
+// import { env } from 'process';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -20,17 +21,18 @@ import { env } from 'process';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: env.DB_HOST,
-      port: Number(env.DB_PORT),
-      username: env.DB_USERNAME,
-      password: env.DB_PASSWORD,
-      database: env.DB_NAME,
+      host: 'db',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'postgres',
       entities: [],
       synchronize: true,
       autoLoadEntities: true,
     }),
     TypeOrmModule.forFeature([Ruling]),
     RulingsModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

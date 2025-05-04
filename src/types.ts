@@ -8,12 +8,3 @@ export enum SortDirection {
 registerEnumType(SortDirection, {
   name: 'SortDirection',
 });
-
-export enum RulingSortKey {
-  TITLE = 'title',
-  PUBLISHED_AT = 'publishedAt',
-}
-
-registerEnumType(RulingSortKey, {
-  name: 'RulingSortKey',
-});
