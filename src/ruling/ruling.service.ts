@@ -54,8 +54,9 @@ export class RulingService {
   }
 
   async getRulingById(id: string) {
-    return await this.rulingRepository.findOneBy({
-      id,
+    return await this.rulingRepository.findOne({
+      where: { id },
+      relations: ['categories'],
     });
   }
 }

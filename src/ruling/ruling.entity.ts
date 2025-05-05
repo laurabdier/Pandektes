@@ -1,7 +1,6 @@
-import { ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique, ManyToMany, JoinTable } from 'typeorm';
+import { Category } from 'src/category/category.entity';
 
-@ObjectType()
 @Entity()
 @Unique(['providerId', 'providerSource'])
 export class Ruling {
@@ -22,4 +21,8 @@ export class Ruling {
 
   @Column()
   providerSource: string;
+
+  @ManyToMany(() => Category)
+  @JoinTable()
+  categories: Category[];
 }

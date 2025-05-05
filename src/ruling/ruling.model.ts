@@ -1,4 +1,5 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Category } from 'src/category/category.model';
 
 @ObjectType()
 export class Ruling {
@@ -19,4 +20,7 @@ export class Ruling {
 
   @Field()
   providerSource: string;
+
+  @Field(() => [Category])
+  categories: Category[];
 }

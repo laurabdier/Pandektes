@@ -1,7 +1,7 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { Ruling } from './ruling.model';
-import { RulingService } from '../ruling.service';
 import { RulingsFilterInput } from './ruling.input';
+import { RulingService } from './ruling.service';
+import { Ruling } from './ruling.model';
 
 @Resolver(() => Ruling)
 export class RulingsResolver {

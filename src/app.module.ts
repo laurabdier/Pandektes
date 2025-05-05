@@ -2,22 +2,27 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Ruling } from './ruling/ruling.entity';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
 import { RulingsModule } from './ruling/ruling.module';
-// import { env } from 'process';
 import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // auto-generate schema
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
-      playground: true, // enables browser-based GraphQL IDE
+      playground: true,
+      buildSchemaOptions: {
+        orphanedTypes: [],
+      },
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.ts'),
+        outputAs: 'class',
+      },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -30,7 +35,6 @@ import { CategoryModule } from './category/category.module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    TypeOrmModule.forFeature([Ruling]),
     RulingsModule,
     CategoryModule,
   ],
